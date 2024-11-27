@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple To-Do App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        color:rgb(3, 3, 3);
+      }
+      .todo-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .todo-item button {
+        background-color: rgb(255, 0, 115);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .todo-item button:hover {
+        background-color: darkred;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To-Do App with Password Toggle</h1>
+    <div>
+      <label for="password">Password: </label>
+      <input type="password" id="password" />
+      <button id="togglePassword">Show</button>
+    </div>
+    <h2>To-Do List</h2>
+    <div>
+        <label for="List">List: </label>
+      <input type="text" id="todoInput" placeholder="Enter Item" />
+      <button id="addTodo">Add</button>
+    </div>
+    <ul id="todoList"></ul>
+    <script>
+      const passwordInput = document.getElementById("password");
+      const togglePasswordButton = document.getElementById("togglePassword");
+      togglePasswordButton.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          togglePasswordButton.textContent = "Hide";
+        } else {
+          passwordInput.type = "password";
+          togglePasswordButton.textContent = "Show";
+        }
+      });
+      const todoInput = document.getElementById("todoInput");
+      const addTodoButton = document.getElementById("addTodo");
+      const todoList = document.getElementById("todoList");
+      addTodoButton.addEventListener("click", () => {
+        const task = todoInput.value.trim();
+        if (task === "") {
+          alert("Please enter a task.");
+          return;
+        }
+        const listItem = document.createElement("li");
+        listItem.className = "todo-item";
+        listItem.innerHTML = `
+        <span>${task}</span>
+        <button class="deleteTodo">Delete</button>
+      `;
+        listItem.querySelector(".deleteTodo").addEventListener("click", () => {
+          listItem.remove();
+        });
+        todoList.appendChild(listItem);
+        todoInput.value = "";
+      });
+    </script>
+  </body>
+</html>
